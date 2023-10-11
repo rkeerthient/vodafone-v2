@@ -130,17 +130,17 @@ function Inner() {
 export default function Home({ document }: TemplateProps) {
   return (
     <>
-      <Header />
       <SearchHeadlessProvider searcher={searcher}>
         <ChatHeadlessProvider config={chatConfig}>
           <ChatModeContextProvider>
+            <Header />
             <AnimatePresence>
               <Inner />
             </AnimatePresence>
+            <Footer />
           </ChatModeContextProvider>
         </ChatHeadlessProvider>
       </SearchHeadlessProvider>
-      <Footer />
     </>
   );
 }

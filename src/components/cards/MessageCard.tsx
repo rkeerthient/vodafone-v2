@@ -8,6 +8,7 @@ import {
 import { cn } from "../../utils/cn";
 import { HandThumbDownIcon, HandThumbUpIcon } from "@heroicons/react/20/solid";
 import { useCallback, useState } from "react";
+import { useChatModeContext } from "../../hooks";
 
 interface MessageCardProps {
   message: Message;
@@ -16,6 +17,7 @@ interface MessageCardProps {
 }
 
 const MessageCard = ({ initial, message, idx }: MessageCardProps) => {
+  const { setShowToast } = useChatModeContext();
   const [selectedThumb, setSelectedThumb] = useState("");
   const chatActions = useChatActions();
 
@@ -25,14 +27,17 @@ const MessageCard = ({ initial, message, idx }: MessageCardProps) => {
   const onReport = useCallback(
     async (actionType: string) => {
       setSelectedThumb(actionType);
-
-      await chatActions.report({
-        action: actionType === "THUMBS_UP" ? "THUMBS_UP" : "THUMBS_DOWN",
-        chat: {
-          responseId: message.responseId,
-          conversationId: conversationId,
-        },
-      });
+      await chatActions
+        .report({
+          action: actionType === "THUMBS_UP" ? "THUMBS_UP" : "THUMBS_DOWN",
+          chat: {
+            responseId: message.responseId,
+            conversationId: conversationId,
+          },
+        })
+        .then(() => {
+          setShowToast(true);
+        });
     },
     [chatActions]
   );

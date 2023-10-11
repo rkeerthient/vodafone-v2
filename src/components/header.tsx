@@ -1,5 +1,7 @@
 import * as React from "react";
 import Cta from "../../../vodafone-new/src/components/cta";
+import { useChatModeContext } from "../hooks";
+import Toast from "./Toast";
 
 type Link = {
   label: string;
@@ -25,9 +27,20 @@ const Header = () => {
       </a>
     </div>
   ));
+  const { showToast, setShowToast } = useChatModeContext();
 
+  const handleHideToast = () => {
+    setShowToast(false);
+  };
   return (
     <div>
+      {showToast && (
+        <Toast
+          message="Grazie per il tuo feedback!"
+          onClose={handleHideToast}
+        />
+      )}
+
       <img src="https://i.imgur.com/bTlOBZ3.png" alt="" />
     </div>
   );
