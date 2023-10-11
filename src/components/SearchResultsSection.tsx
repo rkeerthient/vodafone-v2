@@ -18,6 +18,21 @@ const GridSection3Col = ({ results, CardComponent, header }: any) => {
     </div>
   );
 };
+const hiddenGrid = ({ results, CardComponent, header }: any) => {
+  if (!CardComponent) {
+    return <div>Missing Card Component</div>;
+  }
+  return (
+    <div className="hidden">
+      <div>{header}</div>
+      <div className="grid grid-cols-2 gap-1 md:grid-cols-3 md:gap-8 ">
+        {results.map((r: any, index: number) => (
+          <CardComponent key={index} result={r} />
+        ))}
+      </div>
+    </div>
+  );
+};
 const SearchResultsSection = () => {
   const lastSearch = useSearchState((state) => state.query.mostRecentSearch);
 
@@ -47,8 +62,8 @@ const SearchResultsSection = () => {
 
           locations: {
             CardComponent: LocationsCard,
-            SectionComponent: GridSection3Col,
-            viewAllButton: true,
+            SectionComponent: hiddenGrid,
+            viewAllButton: false,
           },
         }}
       />
