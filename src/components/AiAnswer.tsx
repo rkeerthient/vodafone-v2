@@ -5,6 +5,7 @@ import { useChatModeContext } from "../hooks";
 import { cn } from "../utils/cn";
 import { useEffect } from "react";
 import MessageCard from "./cards/MessageCard";
+import { HandThumbUpIcon } from "@heroicons/react/20/solid";
 
 export default function AiAnswer() {
   const messages = useChatState((s) => s.conversation.messages);
@@ -13,7 +14,6 @@ export default function AiAnswer() {
   const { chatMode } = useChatModeContext();
 
   useEffect(() => {
-    console.log(messages);
     const chatbox = document.getElementById("results");
     chatbox?.scrollTo({ top: 100, left: 100, behavior: "smooth" });
   }, [messages]);
